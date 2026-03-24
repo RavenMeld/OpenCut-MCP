@@ -20,20 +20,26 @@ class BrowserManager {
   }
 
   private async _launch(): Promise<void> {
-    // Use launchServer() + connect() so Chrome communicates over WebSocket (TCP port)
-    // instead of --remote-debugging-pipe, which fails in Git Bash / Bun on Windows.
-    // Use CHROMIUM_PATH env var to override; otherwise Playwright uses its bundled Chromium.
     const executablePath = process.env.CHROMIUM_PATH ?? undefined;
     const headless = process.env.MCP_HEADLESS !== "false";
-    this.server = await chromium.launchServer({
+    const launchOpts = {
       headless,
       ...(executablePath ? { executablePath } : {}),
       args: ["--no-sandbox", "--disable-setuid-sandbox"],
-    });
-    this.browser = await chromium.connect(this.server.wsEndpoint());
+    };
+
+    if (process.platform === "win32") {
+      // On Windows/Git Bash, use launchServer() + connect() over WebSocket (TCP)
+      // to avoid --remote-debugging-pipe failures in Bun.
+      this.server = await chromium.launchServer(launchOpts);
+      this.browser = await chromium.connect(this.server.wsEndpoint());
+    } else {
+      // On Linux (Docker/CI), launch() directly works fine.
+      this.browser = await chromium.launch(launchOpts);
+    }
+
     this.context = await this.browser.newContext();
     this.page = await this.context.newPage();
-    // Navigate to home on startup
     await this.page.goto(EDITOR_BASE);
   }
 

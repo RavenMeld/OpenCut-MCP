@@ -1,0 +1,42 @@
+registry:
+    opencut-mcp:
+        title: OpenCut MCP
+        description: Control the OpenCut video editor via Playwright browser automation. Exposes 161 tools for project management, timeline editing, playback, media, audio, stickers, text, effects, keyframes, export, transcription, bookmarks, and more.
+        image: opencut-mcp:latest
+        type: server
+        metadata:
+            category: productivity
+            owner: RavenMeld
+            tags:
+                - video
+                - editor
+                - automation
+                - playwright
+        tools:
+            - name: project_list
+            - name: project_create
+            - name: project_open
+            - name: project_close
+            - name: project_save
+            - name: project_delete
+            - name: project_duplicate
+            - name: project_get_settings
+            - name: project_update_settings
+            - name: playback_play
+            - name: playback_pause
+            - name: playback_seek
+            - name: playback_get_time
+            - name: timeline_track_add
+            - name: timeline_track_delete
+            - name: timeline_track_list
+            - name: timeline_element_insert
+            - name: timeline_element_delete
+            - name: timeline_element_move
+            - name: timeline_element_update
+            - name: timeline_element_get
+            - name: media_list
+            - name: media_add
+            - name: media_remove
+            - name: export_start
+            - name: export_cancel
+            - name: export_get_progress
