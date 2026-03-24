@@ -1,4 +1,4 @@
-OpenCut MCP
+##OpenCut MCP
 
 Model Context Protocol (MCP) server for [OpenCut](https://opencut.app) — the open-source browser-based video editor. Exposes **161 tools** that give any MCP-compatible AI assistant full programmatic control over OpenCut's editor, timeline, media, effects, export pipeline, and more.
 
